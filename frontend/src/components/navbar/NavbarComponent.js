@@ -16,7 +16,13 @@ import "./styles.css";
 import { userDetail } from "../../redux/actions/user";
 import { logout } from "../../redux/actions/auth";
 import { getCart } from "../../redux/actions/cart";
+import { getMovieDetailByTitle } from "../../redux/actions/movie";
+
 class NavbarComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.inputRef = React.createRef();
+  }
   async componentDidMount() {
     this.props.userDetail(this.props.auth.token);
   }
@@ -24,7 +30,13 @@ class NavbarComponent extends Component {
     // Gọi action "logout" từ props
     this.props.logout();
   };
+  handle = async()=>{
+    
+    const inputValue = this.inputRef.current.value;
+    await this.props.getMovieDetailByTitle(inputValue);
+    window.location.href = `/movie-detail/${this.props.details.id}`;
 
+  }
   render() {
     const { data } = this.props.user;
 
@@ -60,10 +72,12 @@ class NavbarComponent extends Component {
                 </Form.Control>
               </Nav.Item>
               <Nav.Item>
-                <Form action="" className="search-form">
-                  <input type="search" className="search-input" />
-                  <i class="fa fa-search"></i>
-                </Form>
+                {/* <Form action="" className="search-form"> */}
+                <input type="search" className="" ref={this.inputRef}/>
+                  <button class="fa fa-search" onClick={this.handle}>
+                    <Link to={`/movie-detail/${this.props.details.id}`}></Link>
+                  </button>
+                {/* </Form> */}
               </Nav.Item>
 
               {this.props.auth.token !== null ? (
@@ -117,8 +131,9 @@ class NavbarComponent extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   user: state.user,
+  details: state.movie.details
 });
 
-const mapDispatchToProps = { userDetail ,logout};
+const mapDispatchToProps = { userDetail ,logout, getMovieDetailByTitle};
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavbarComponent);

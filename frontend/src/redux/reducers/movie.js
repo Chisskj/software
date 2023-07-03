@@ -31,6 +31,13 @@ const movieReducer = (state = initialState, action) => {
 				details: action.payload,
 			};
 		}
+		case "GET_MOVIE_DETAIL_BY_TITLE": {
+			console.log("DETAIL: ", action.payload)
+			return {
+				...state,
+				details: action.payload,
+			};
+		}
 		default: {
 			return {
 				...state,

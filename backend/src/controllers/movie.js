@@ -95,7 +95,14 @@ exports.createMovie = async (req, res) => {
 
 exports.detailMovie = async (req, res) => {
   const { id } = req.params;
-  const results = await movieModel.getMovieByIdWithItems(id);
+  const { title } = req.query;
+  let results=null;
+  if(title != null){
+    results = await movieModel.getMovieByTittleWithItems(title);
+  }
+  else{
+    results = await movieModel.getMovieByIdWithItems(id);
+  }
   if (results.length > 0) {
     return status.ResponseStatus(res, 200, "Details of movie", {
       id: results[0].id,
