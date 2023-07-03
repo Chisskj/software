@@ -8,21 +8,21 @@ export default class PersonalInfo extends Component {
       <Form>
         <Form.Group>
           <Form.Label>Full Name</Form.Label>
-          <Form.Control type="email" placeholder="Jonas El Rodriguez" />
+          <Form.Control type="email" placeholder="Chí" />
         </Form.Group>
 
         <Form.Group>
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="jonasrodri123@gmail.com" />
+          <Form.Control type="email" placeholder="Chi@gmail.com" />
         </Form.Group>
 
         <Form.Group>
           <Form.Label>Phone Number</Form.Label>
           <InputGroup className="mb-3">
             <InputGroup.Prepend className="contact">
-              <InputGroup.Text>+62</InputGroup.Text>
+              <InputGroup.Text>+84</InputGroup.Text>
             </InputGroup.Prepend>
-            <Form.Control type="number" placeholder="81445687121" />
+            <Form.Control type="number" placeholder="0378060JQK" />
           </InputGroup>
         </Form.Group>
         <Alert variant="warning">

@@ -31,7 +31,7 @@ class OrderInfo extends Component {
                 <Moment format="DD MMMM YYYY">{dataDate}</Moment>
               </p>
               <p className="text-right text-link-xs text-color-title">
-                {dataShowtime.times.map((item) => item.time)}
+                {localStorage.getItem("selectedTime")}
               </p>
             </div>
             <div className="d-flex justify-content-between">

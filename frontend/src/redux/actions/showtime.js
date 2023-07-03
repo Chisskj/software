@@ -22,6 +22,12 @@ export const showTime = (date, location, movie) => {
     }
   };
 };
+export const showTimed = (selectedTime) => {
+  return {
+    type: "SET_SELECTED_TIME",
+    payload: selectedTime,
+  };
+};
 
 export const movieTime = (id) => {
   return async (dispatch) => {
@@ -29,7 +35,7 @@ export const movieTime = (id) => {
       dispatch({
         type: "SET_SHOWTIME_MESSAGE",
       });
-      const response = await http().get(`movieShowtime/${id}`);
+      const response = await http().get(`movieShowtime?movie=${id}`);
       dispatch({
         type: "MOVIE_SHOWTIME",
         payload: response.data.results,

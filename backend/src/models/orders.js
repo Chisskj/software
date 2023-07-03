@@ -62,6 +62,26 @@ exports.getTransactionByUserId = async (id) => {
     );
   });
 };
+exports.getTransactionByShowtimeId = async (idMovie, idCinema, idTime) => {
+  return new Promise((resolve, reject) => {
+    dbConn.query(
+      `
+    SELECT t.id, cinemas.name as cinema, cinemas.picture as picture, movies.title as movie,
+    t.dateTime, times.name as time, t.price as totalPrice, t.seatName as seat
+    FROM ${table} t
+    INNER JOIN movies ON t.idMovie = movies.id
+    INNER JOIN cinemas ON t.idCinema = cinemas.id
+    INNER JOIN times ON t.idTime = times.id
+    WHERE t.idMovie=${idMovie} AND t.idCinema=${idCinema} AND t.idTime=${idTime}
+    `,
+      (err, res, field) => {
+        if (err) reject(err);
+        resolve(res);
+      }
+    );
+  });
+};
+
 
 exports.getOrderCountByConditionAsync = (cond) => {
   return new Promise((resolve, reject) => {

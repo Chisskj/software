@@ -53,3 +53,6 @@ tbody tr td input[type="checkbox"]:checked:before {
 .order-seat {
 	border-radius: 24px !important;
 }
+tbody tr td input[type="checkbox"]:disabled:before {
+	background-color: #6e7191;
+  }

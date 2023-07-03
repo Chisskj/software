@@ -18,42 +18,12 @@ class MovieDetailComponent extends Component {
     super(props);
     this.state = {
       selectValue: "",
+      selectedTime: "",
       listShowTime,
       movie: {},
       location: "",
       date: "",
-      showResults: [
-        {
-          cinema: "Cinema 1",
-          address: "Address 1",
-          picture: "image1.jpg",
-          times: [
-            { time: "10:00 AM", id: 1 },
-            { time: "2:00 PM", id: 2 },
-          ],
-          price: 10,
-        },
-        {
-          cinema: "Cinema 2",
-          address: "Address 2",
-          picture: "image2.jpg",
-          times: [
-            { time: "1:00 PM", id: 3 },
-            { time: "5:00 PM", id: 4 },
-          ],
-          price: 12,
-        },
-        {
-          cinema: "Cinema 3",
-          address: "Address 3",
-          picture: "image3.jpg",
-          times: [
-            { time: "4:00 PM", id: 5 },
-            { time: "8:00 PM", id: 6 },
-          ],
-          price: 15,
-        },
-      ],
+      showResults: [],
       showLocDate: [],
     };
   }
@@ -62,13 +32,19 @@ class MovieDetailComponent extends Component {
     const { id } = this.props.match.params;
     await this.props.getMovieDetail(id);
     this.props.movieTime(id);
+    const data = new URLSearchParams();
+        data.append("movie", this.props.match.params.id);
+        const response = await http().get(`showtimes?${data.toString()}`);
+        this.setState({
+          location: "6",
+          date: "20230606",
+          showResults: response.data.results,
+        });
   }
   searchCinema = (e) => {
     this.setState({ [e.target.name]: e.target.value }, async () => {
       if (this.state.location !== "" && this.state.date !== "") {
         const data = new URLSearchParams();
-        data.append("date", this.state.date);
-        data.append("location", this.state.location);
         data.append("movie", this.props.match.params.id);
         const response = await http().get(`showtimes?${data.toString()}`);
         this.setState({
@@ -218,7 +194,11 @@ class MovieDetailComponent extends Component {
                                 variant="light"
                                 className="btn-time"
                                 onClick={() =>
-                                  this.setState({ selectedTime: times.id })
+                                  {this.setState({ selectedTime: times.id })
+                                  localStorage.setItem("selectedTime", times.time);
+                                  localStorage.setItem("timeId", times.id);
+                                  localStorage.setItem("idCinema", item.id);
+                                }
                                 }
                               >
                                 {times.time}

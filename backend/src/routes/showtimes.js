@@ -11,4 +11,12 @@ routes
 		showtimeController.createShowtime,
 	)
 	.get(showtimeController.listShowtime);
+routes
+	.route("/movieShowtime")
+	.post(
+		authMiddleware.authCheck,
+		authMiddleware.authRole(Role.Admin),
+		showtimeController.createShowtime,
+	)
+	.get(showtimeController.getShowtime);
 module.exports = routes;

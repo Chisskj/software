@@ -98,9 +98,6 @@ exports.createShowtime = async (req, res) => {
     idCinema: data.idCinema,
     idTime: data.idTime,
   };
-  if (showtimeData) {
-    console.log("Berhasil");
-  }
   // const initialResult = await showtimeModel.createShowtime(showtimeData);
   // if (initialResult.affectedRows > 0) {
   // 	const resultsData = await showtimeModel.getShowtimeById(
@@ -142,13 +139,43 @@ exports.listShowtime = async (req, res) => {
       };
     }
     // output[item.cinemaName].times.push(item.timeName);
+    if (!output[item.cinemaName].times.some(time => time.id === item.timeId)) {
+      output[item.cinemaName].times.push({
+        time: item.timeName,
+        id: item.timeId,
+        seatOrder: ""
+      });
+    }
+  });
+  const results = Object.values(output);
+  if (results) {
+    return status.ResponseStatus(res, 200, "List of all showtime", results);
+  }
+};
+exports.getShowtime = async (req, res) => {
+  const cond = { ...req.query };
+  cond.movie = cond.movie || "";
+
+  const resultGetTimes = await showtimeModel.getShowtimeByMovieId(cond);
+  const output = {};
+  resultGetTimes.forEach((item) => {
+    if (!output[item.cinemaName]) {
+      output[item.cinemaName] = {
+        id: item.cinemaId,
+        cinema: item.cinemaName,
+        picture: item.cinemaPicture,
+        address: item.cinemaAddress,
+        price: item.cinemaPrice,
+        times: [],
+      };
+    }
+    // output[item.cinemaName].times.push(item.timeName);
     output[item.cinemaName].times.push({
       time: item.timeName,
       id: item.timeId,
     });
   });
   const results = Object.values(output);
-  console.log(results);
   if (results) {
     return status.ResponseStatus(res, 200, "List of all showtime", results);
   }
