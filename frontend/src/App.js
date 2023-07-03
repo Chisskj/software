@@ -7,6 +7,7 @@ import SignIn from "./pages/register/SignIn";
 import ForgotPassword from "./pages/register/ForgotPassword";
 import MovieDetail from "./pages/movie-detail/MovieDetail";
 import OrderPage from "./pages/order-page/OrderPage";
+import AddCart from "./pages/addcart-page/AddCart";
 import PaymentPage from "./pages/payment-page/PaymentPage";
 import TicketResult from "./pages/ticket-result-page/TicketResult";
 import ProfilePage from "./pages/profile-page/ProfilePage";
@@ -33,7 +34,9 @@ export default class App extends Component {
               <Route path="/login" component={SignIn} />
               <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/movie-detail/:id" component={MovieDetail} />
+              <Route path="/addcart-page/:id" component={AddCart} />
               <PrivateRoute path="/order-page" privateComponent={OrderPage} />
+              
               <PrivateRoute path="/payment" privateComponent={PaymentPage} />
               <PrivateRoute
                 path="/ticket-result"

@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./styles.css";
 
-function ButtonPanel(props) {
+function ButtonLeft(props) {
   return (
     <div className="pt-4 checkout">
       <Link to={props.goButtonLeft}>
@@ -19,4 +19,4 @@ function ButtonPanel(props) {
   );
 }
 
-export default ButtonPanel;
+export default ButtonLeft;

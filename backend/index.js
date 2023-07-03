@@ -26,6 +26,7 @@ app.get("/", (req, res) => {
 app.use(
   "/",
   require("./src/routes/movies"),
+  require("./src/routes/carts"),
   require("./src/routes/cinemas"),
   require("./src/routes/genres"),
   require("./src/routes/times"),

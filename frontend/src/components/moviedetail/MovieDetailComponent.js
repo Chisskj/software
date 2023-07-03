@@ -9,6 +9,7 @@ import Moment from "react-moment";
 import moment from "moment";
 import { showTime, movieTime } from "../../redux/actions/showtime";
 import { getMovieDetail } from "../../redux/actions/movie";
+import { cart } from "../../redux/actions/cart";
 import { createOrder } from "../../redux/actions/order";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
@@ -32,14 +33,6 @@ class MovieDetailComponent extends Component {
     const { id } = this.props.match.params;
     await this.props.getMovieDetail(id);
     this.props.movieTime(id);
-    const data = new URLSearchParams();
-        data.append("movie", this.props.match.params.id);
-        const response = await http().get(`showtimes?${data.toString()}`);
-        this.setState({
-          location: "6",
-          date: "20230606",
-          showResults: response.data.results,
-        });
   }
   searchCinema = (e) => {
     this.setState({ [e.target.name]: e.target.value }, async () => {
@@ -55,10 +48,14 @@ class MovieDetailComponent extends Component {
   };
   render() {
     const { movie } = this.props;
+    const { user_id } = this.props;
+    console.log("user_id: ", user_id.data.id)
+    console.log("movie.details: ", movie.details)
     const { timeData } = this.props.showtime;
     const { showResults } = this.state;
     const backendImageUrl = `${process.env.REACT_APP_API_URL}uploads`; // Thay thế bằng đường dẫn URL của backend từ biến môi trường
     const imageUrl = `${backendImageUrl}/${movie.details.picture}`;
+    console.log("imageUrl",imageUrl)
     return (
     <div>
         <Row>
@@ -231,9 +228,20 @@ class MovieDetailComponent extends Component {
                           Book now
                         </Button>
                       </Link>
-                      <Button variant="light" className="btn-nav text-primary">
+
+                      <Button variant="light" className="btn-nav text-primary"
+                      onClick={() =>{
+                        console.log(11222222)
+                        this.props.cart(
+                          user_id.data.id,
+                          movie.details.id,
+                        )
+                      }
+                      }
+                      >
                         Add to cart
                       </Button>
+
                     </Card.Body>
                   </Card>
                 </Col>
@@ -252,12 +260,14 @@ const mapStateToProps = (state) => ({
   movie: state.movie,
   showtime: state.showtime,
   order: state.order,
+  user_id: state.user,
 });
 const mapDispatchToProps = {
   getMovieDetail,
   showTime,
   createOrder,
   movieTime,
+  cart,
 };
 
 export default withRouter(

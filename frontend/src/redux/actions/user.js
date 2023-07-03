@@ -10,8 +10,10 @@ export const userDetail = (token) => {
 
       // Add Authorization header with JWT token
       const headers = { 'authorization': `Bearer ${token}` };
+
       const response = await http(token).get("user", { headers });
       localStorage.setItem("token", token);
+
       dispatch({
         type: "GET_USER",
         payload: response.data.results,
@@ -28,33 +30,36 @@ export const userDetail = (token) => {
   };
 };
 
-export const updateUser = (token, data) => {
+export const updateUser = (token, data, id) => {
+  console.log("vua update xong")
+  console.log(token)
   return async (dispatch) => {
-    const params = new FormData();
+    const params = new URLSearchParams();
+
     if (data.firstName) {
-      params.append(data.firstName);
+      params.append("firstName", data.firstName);
     }
     if (data.lastName) {
-      params.append(data.lastName);
+      params.append("lastName",data.lastName);
     }
     if (data.phoneNumber) {
-      params.append(data.phoneNumber);
+      params.append("phoneNumber",data.phoneNumber);
     }
     if (data.picture) {
-      params.append(data.picture);
+      params.append("picture", data.picture);
     }
     if (data.email) {
-      params.append(data.email);
+      params.append("email", data.email);
     }
     if (data.password) {
-      params.append(data.password);
+      params.append("password", data.password);
     }
     try {
       dispatch({
         type: "SET_USER_MESSAGE",
         message: "",
       });
-      const response = await http(token).patch("user", params);
+      const response = await http(token).patch(`user/${id}`, params);
       dispatch({
         type: "UPDATE_USER",
         payload: response.data.results,

@@ -9,6 +9,7 @@ import genreReducer from "./genre";
 import showtimeReducer from "./showtime";
 import orderReducer from "./order";
 import userReducer from "./user";
+import cartReducer from "./cart"
 
 const authConfig = {
   key: "authReducer",
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   user: userReducer,
   auth: persistReducer(authConfig, authReducer),
   movie: movieReducer,
+  cart: cartReducer,
   genre: genreReducer,
   showtime: showtimeReducer,
   order: orderReducer,
