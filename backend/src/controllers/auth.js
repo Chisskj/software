@@ -128,8 +128,10 @@ exports.checkValidation = (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  const { id } = req.params;
-  const results = await userModel.getUsersById(id);
+  const { authorization } = req.headers;
+		const token = authorization.substr(7);
+		const data = jwt.verify(token, APP_KEY);
+  const results = await userModel.getUsersById(data.id);
   if (results.length > 0) {
     return status.ResponseStatus(res, 200, "List Detail user", results[0]);
   } else {

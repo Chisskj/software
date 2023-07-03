@@ -14,7 +14,7 @@ class ShowtimeComponent extends Component {
     this.props.showTime();
   }
   book = (idTime) => {
-    console.log(idTime);
+    localStorage.setItem("selectedTime", idTime);
   };
   render() {
     return (

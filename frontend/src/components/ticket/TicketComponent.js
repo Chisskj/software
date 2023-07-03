@@ -6,8 +6,38 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { createOrder, createSeat } from "../../redux/actions/order";
 import Moment from "react-moment";
-
+import http from "../../helpers/http";
 class TicketComponent extends Component {
+  componentDidMount() {
+    this.createOrder();
+  }
+
+  async createOrder() {
+    const { auth, order } = this.props;
+    const { token } = auth;
+    const { listOrder } = order;
+    const { dataLocation ,dataDate, dataShowtime, dataMovie } = listOrder;
+    const { seatOrder } = this.props.order;
+    try {
+      const params = {
+        idMovie: dataMovie.id,
+        idCinema: localStorage.getItem("idCinema"),
+        idTime: localStorage.getItem("timeId"),
+        idLocation: dataLocation,
+        dateTime: dataDate,
+        price: dataShowtime.price * seatOrder.split(",").length,
+        seatName: seatOrder
+      };
+  
+      const searchParams = new URLSearchParams(params);
+      const url = `orders?${searchParams.toString()}`;
+      const response = await http(token).post(url);
+      const responseData = response.data;
+      console.log(responseData);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   render() {
     const { dataDate, dataShowtime, dataMovie } = this.props.order.listOrder;
     const { seatOrder } = this.props.order;
@@ -74,7 +104,7 @@ class TicketComponent extends Component {
                         <Col xs={4}>
                           <p className="info mb-1">Time</p>
                           <p className="info-value">
-                            {dataShowtime.times.map((item) => item.time)}
+                            {localStorage.getItem("selectedTime")}
                           </p>
                         </Col>
                         <Col xs={4}>
@@ -156,7 +186,7 @@ class TicketComponent extends Component {
                             <Col xs={6}>
                               <p className="info mb-1">Time</p>
                               <p className="info-value">
-                                {dataShowtime.times.map((item) => item.time)}
+                                {localStorage.getItem("selectedTime")}
                               </p>
                             </Col>
                             <Col xs={6}>
@@ -269,6 +299,7 @@ class TicketComponent extends Component {
 }
 const mapStateToProps = (state) => ({
   order: state.order,
+  auth : state.auth,
 });
 const mapDispatchToProps = { createOrder, createSeat };
 

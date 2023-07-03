@@ -16,7 +16,7 @@ class MovieDesc extends Component {
               Date & time
             </p>
             <p className="float-right text-lg-20">
-              {dataDate} at {dataShowtime.times.map((item) => item.time)}
+              {dataDate} at {localStorage.getItem("selectedTime")}
             </p>
           </ListGroup.Item>
           <ListGroup.Item className="pb-0">

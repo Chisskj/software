@@ -8,7 +8,8 @@ const seatModel = require("../models/seats");
 const status = require("../helpers/Response");
 
 exports.createOrder = async (req, res) => {
-  const data = req.body;
+  const data = req.query;
+  console.log(data);
   const resultsGetMovie = await movieModel.getMovieById(data.idMovie);
   if (resultsGetMovie.length < 1) {
     return status.ResponseStatus(res, 400, "Movie not exists");
@@ -65,5 +66,13 @@ exports.listOrder = async (req, res) => {
   console.log(results);
   if (results) {
     return status.ResponseStatus(res, 200, "List of all Order", results);
+  }
+};
+exports.showTimeOrdered = async (req, res) => {
+  const { idMovie, idCinema, idTime } = req.query;
+  const results = await orderModel.getTransactionByShowtimeId(idMovie, idCinema, idTime);
+  console.log(results);
+  if (results) {
+    return status.ResponseStatus(res, 200, "List of all Order in showtimes", results);
   }
 };

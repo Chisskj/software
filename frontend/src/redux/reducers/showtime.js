@@ -15,6 +15,12 @@ const showtimeReducer = (state = initialState, action) => {
         message: action.message,
       };
     }
+    
+    case "SET_SELECTED_TIME": // Thêm case mới để cập nhật selectedTime
+      return {
+        ...state,
+        selectedTime: action.payload,
+      };
     case "MOVIE_SHOWTIME": {
       return {
         ...state,

@@ -1,5 +1,4 @@
 import http from "../../helpers/http";
-
 export const userDetail = (token) => {
   return async (dispatch) => {
     try {
@@ -13,6 +12,7 @@ export const userDetail = (token) => {
       const headers = { 'authorization': `Bearer ${token}` };
 
       const response = await http(token).get("user", { headers });
+      localStorage.setItem("token", token);
 
       dispatch({
         type: "GET_USER",
