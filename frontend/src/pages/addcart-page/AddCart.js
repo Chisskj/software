@@ -9,7 +9,7 @@ import "./styles.css";
 import { connect } from "react-redux";
 import { createOrder } from "../../redux/actions/order";
 import { getCart } from "../../redux/actions/cart";
-import CartDetailComponent from "E:/Cinema_full/software/frontend/src/components/cartdetail/CartDetailComponent.js";
+import CartDetailComponent from "../../components/cartdetail/CartDetailComponent";
 
 function AddCart({ order }) {
     const { dataMovie } = order.listOrder;

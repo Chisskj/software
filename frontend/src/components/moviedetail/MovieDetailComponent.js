@@ -34,6 +34,20 @@ class MovieDetailComponent extends Component {
     await this.props.getMovieDetail(id);
     this.props.movieTime(id);
   }
+  // eslint-disable-next-line no-dupe-class-members
+  async componentDidMount() {
+    const { id } = this.props.match.params;
+    await this.props.getMovieDetail(id);
+    this.props.movieTime(id);
+    const data = new URLSearchParams();
+        data.append("movie", this.props.match.params.id);
+        const response = await http().get(`showtimes?${data.toString()}`);
+        this.setState({
+          location: "6",
+          date: "20230606",
+          showResults: response.data.results,
+        });
+  }
   searchCinema = (e) => {
     this.setState({ [e.target.name]: e.target.value }, async () => {
       if (this.state.location !== "" && this.state.date !== "") {
