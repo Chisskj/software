@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Button,
   Navbar,
   Nav,
   Form,
@@ -9,11 +10,12 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import cinemaGr07_purple from "../../assets/images/cinemaGr07-purple.svg";
+import cart from "../../assets/images/cart.png";
 import { connect } from "react-redux";
 import "./styles.css";
 import { userDetail } from "../../redux/actions/user";
 import { logout } from "../../redux/actions/auth";
-
+import { getCart } from "../../redux/actions/cart";
 class NavbarComponent extends Component {
   async componentDidMount() {
     this.props.userDetail(this.props.auth.token);
@@ -25,6 +27,7 @@ class NavbarComponent extends Component {
 
   render() {
     const { data } = this.props.user;
+
     return (
       <Navbar expand="lg">
         <Container>
@@ -39,6 +42,11 @@ class NavbarComponent extends Component {
               <Nav.Link href="/">Movies</Nav.Link>
             </Nav>
             <Nav className="nav-link justify-content-end" activeKey="/home">
+              <Nav.Item>
+                <Link to={`/addcart-page/${data.id}`}>  
+                  <Image src={cart} className="cartt" />
+                </Link>
+              </Nav.Item>
               <Nav.Item>
                 <Form.Control
                   as="select"
