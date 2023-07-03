@@ -12,7 +12,7 @@ export const userDetail = (token) => {
       // Add Authorization header with JWT token
       const headers = { 'authorization': `Bearer ${token}` };
 
-      const response = await http(token).get("user/16", { headers });
+      const response = await http(token).get("user", { headers });
 
       dispatch({
         type: "GET_USER",
