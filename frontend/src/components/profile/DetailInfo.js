@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, Col, InputGroup, Form, Row, Alert } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import ButtonLeft from "../splitpanel/ButtonLeft";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -15,9 +16,9 @@ const ValidatorSchema = Yup.object().shape({
     .min(2, "Too Short!")
     .max(30, "Too Long!")
     .required("Required"),
-  phoneNumber: Yup.number()
-    .min(2, "Too Short!")
-    .max(30, "Too Long!")
+  phoneNumber: Yup.string()
+    .min(9, "Too Short!")
+    .max(10, "Too Long!")
     .required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
 });
@@ -27,6 +28,7 @@ class DetailInfo extends Component {
     show: true,
     message: "",
   };
+
   update = async (values) => {
     const { token } = this.props.auth;
     await this.props.updateUser(token, {
@@ -35,15 +37,18 @@ class DetailInfo extends Component {
       phoneNumber: values.phoneNumber,
       email: values.email,
       password: values.password,
-    });
+    }, values.id);
     if (this.props.user.errorMsg === "") {
       console.log("sukses");
     } else {
       console.log("gagal");
     }
   };
+
   render() {
     const { data } = this.props.user;
+    console.log(data.id)
+
     return (
       <div className="pt-4">
         <Formik
@@ -53,10 +58,14 @@ class DetailInfo extends Component {
             phoneNumber: data.phoneNumber,
             email: data.email,
             password: "",
+            id: data.id
           }}
           validationSchema={ValidatorSchema}
           onSubmit={(values) => {
+            values.id = data.id
+            console.log("hihihihi");
             this.update(values);
+            window.location.reload();
           }}
         >
           {({
@@ -68,7 +77,7 @@ class DetailInfo extends Component {
             handleSubmit,
             isSubmitting,
           }) => (
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} style={{width: '100% !important'}}>
               <Card>
                 <Card.Body>
                   <p>Details Information</p>
@@ -78,12 +87,13 @@ class DetailInfo extends Component {
                       <Col>
                         <Form.Label>First Name</Form.Label>
                         <Form.Control
+                          style={{width: '100% !important'}}
                           type="text"
                           placeholder="Write your first name"
                           name="firstName"
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          value={values.firstName}
+                          value={data.firstName?data.firstName:values.firstName}
                           isValid={touched.firstName && !errors.firstName}
                         />
                         {errors.firstName && touched.firstName ? (
@@ -94,11 +104,11 @@ class DetailInfo extends Component {
                         <Form.Label>Last Name</Form.Label>
                         <Form.Control
                           type="text"
-                          placeholder="Write your last name"
+                          placeholder= "Write your last name"
                           name="lastName"
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          value={values.lastName}
+                          value={data.lastName?data.lastName:values.lastName}
                           isValid={touched.lastName && !errors.lastName}
                         />
                         {errors.lastName && touched.lastName ? (
@@ -113,12 +123,12 @@ class DetailInfo extends Component {
                         <Form.Label>E-mail</Form.Label>
                         <Form.Control
                           type="email"
-                          placeholder="Write your email"
                           name="email"
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          value={values.email}
+                          value={data.email}
                           isValid={touched.email && !errors.email}
+                          readOnly
                         />
                         {errors.email && touched.email ? (
                           <div style={{ color: "red" }}>{errors.email}</div>
@@ -128,7 +138,7 @@ class DetailInfo extends Component {
                         <Form.Label>Phone Number</Form.Label>
                         <InputGroup className="mb-3">
                           <InputGroup.Prepend className="contact">
-                            <InputGroup.Text>+62</InputGroup.Text>
+                            <InputGroup.Text>+84</InputGroup.Text>
                           </InputGroup.Prepend>
                           <Form.Control
                             type="number"
@@ -136,7 +146,7 @@ class DetailInfo extends Component {
                             name="phoneNumber"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.phoneNumber}
+                            value={data.phoneNumber?data.phoneNumber:values.phoneNumber}
                             isValid={touched.phoneNumber && !errors.phoneNumber}
                           />
                           {errors.phoneNumber && touched.phoneNumber ? (
@@ -189,11 +199,16 @@ class DetailInfo extends Component {
                     fermentum.
                   </p>
                 </Alert>
-                <ButtonLeft
+                {/* <ButtonLeft
                   buttonText="Update Change"
                   type="submit"
                   disabled={isSubmitting}
-                />
+                  
+                /> */}
+                
+                <button type="submit">Submit</button>
+                
+                
               </div>
             </Form>
           )}
