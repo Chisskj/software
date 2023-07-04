@@ -16,20 +16,36 @@ exports.createCart = async (req, res) => {
   } = req.body;
 	const data = req.body;
   const datalength = 10
-	const results = await cartModel.createCart({
-    user_id,
-    movie_id,
-    showtime ,
-    price,
-    seat,
-    state,
-  });
-	if (results) {
-		return status.ResponseStatus(res, 200, "Genre created successfully", {
-			id: results.insertId,
-			...data,
-		});
-	}
+  const results2 = await cartModel.getCartByUser(user_id)
+  let a = false
+  for (let i = 0; i < results2.length; i++) {
+    const result2 = results2[i];
+    console.log(9, result2.movie_id)
+    console.log(movie_id)
+    if (result2.movie_id == movie_id) {
+      console.log("Đã tìm thấy đối tượng có movie_id = 135");
+      a=true;
+      break;
+    }
+  }
+    
+  if(a===false){
+    const results = await cartModel.createCart({
+      user_id,
+      movie_id,
+      showtime ,
+      price,
+      seat,
+      state,
+    });
+    if (results) {
+      return status.ResponseStatus(res, 200, "Genre created successfully", {
+        id: results.insertId,
+        ...data,
+      });
+    }
+  }
+	
 };
 
 exports.listAllCarts = async (req, res) => {

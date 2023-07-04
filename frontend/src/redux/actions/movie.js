@@ -50,3 +50,16 @@ export const getMovieDetail = (id) => {
 		});
 	};
 };
+export const getMovieDetailByTitle = (title) => {
+	console.log("GETMOVIEBYTITLE", title)
+	return async (dispatch) => {
+		const response = await http().get(`movies/13?title=${title}`);
+		dispatch({
+			type: "GET_MOVIE_DETAIL_BY_TITLE",
+			payload: response.data.results,
+		});
+		dispatch({
+			type: "TOGGLE_MOVIE_LOADING",
+		});
+	};
+};

@@ -40,7 +40,7 @@ exports.getCartByUser = (id) => {
 	return new Promise((resolve, reject) => {
 		const query = dbConn.query(
 			`
-			SELECT c.id, c.user_id, m.title as movie_name, c.showtime, c.price, c.seat, m.picture as imageURL
+			SELECT c.id, c.user_id, c.movie_id, m.title as movie_name, c.showtime, c.price, c.seat, m.picture as imageURL
 			FROM ${table} c 
 			LEFT JOIN users u ON c.user_id = u.id 
             LEFT JOIN movies m ON c.movie_id = m.id 

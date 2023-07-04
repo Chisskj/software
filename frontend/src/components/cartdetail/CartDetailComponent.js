@@ -48,18 +48,20 @@ class CartDetailComponent extends Component {
           <Image src={`${backendImageUrl}/${order.imageURL}`} className="img-cart"  />
           <div className="movie_info">
               <strong className="movie_name">{order.movie_name}</strong>
-              <p className="movie_date">Date: {order.showtime}</p>
+              {/* <p className="movie_date">Date: {order.showtime}</p> */}
               <p className="movie_price">Price: ${order.price}</p>
           </div>
           
           <div className="choosing_seat">
-              <p className="seat">Seat: {order.seat}</p>
-              <Button>Choosing seat</Button>
-              <p className="total_price">Total: ${order.seat?order.seat.split(" ").length*order.price:0}</p>
+              {/* <p className="seat">Seat: {order.seat}</p> */}
+              <Button onClick = {()=>{
+                window.location.href = `/movie-detail/${order.movie_id}`
+              }}>Choosing seat</Button>
+              {/* <p className="total_price">Total: ${order.seat?order.seat.split(" ").length*order.price:0}</p> */}
           </div>
 
           <div className="check_movie">
-              <div className="checkbox-row">
+              {/* <div className="checkbox-row">
                   <input className="checkk" type="checkbox" 
                    name={order.id}
                    checked={checkedItems[order.id] || false}
@@ -90,7 +92,7 @@ class CartDetailComponent extends Component {
                     }
                    }}
                    />
-              </div>
+              </div> */}
               <div className="button-row">
               
                   <Button 
@@ -111,20 +113,20 @@ class CartDetailComponent extends Component {
     return (
         <div className="cart-purchases">
         <Container>
-            <Row>
+            {/* <Row> */}
             <Card className="cart-purchases">
               {orders}
             </Card>
   
-            <Card className="border-0 shadow order-seat">
+            {/* <Card className="border-0 shadow order-seat">
                 <Card.Body className="pt-0">
                     <p className="float-left text-link-md">Total Payment</p>
                     <p className="float-end text-display-xs-bold text-primary text-right">
                     ${totalPrice}
                     </p>
                 </Card.Body>
-            </Card>
-            </Row>
+            </Card> */}
+            {/* </Row> */}
         </Container>
     </div>
     );
