@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import http from "../helpers/http";
-
+import { Card, Col, Image, Row } from "react-bootstrap";
 class EditMovie extends Component {
 	state = {
 		movie: {},
@@ -39,21 +39,101 @@ class EditMovie extends Component {
 		const { movie } = this.state;
 		return (
 			<React.Fragment>
-				{Object.keys(movie).length > 0 && (
-					<Form onSubmit={this.saveData}>
-						<Form.Control
-							type="text"
-							name="title"
+			  {Object.keys(movie).length > 0 && (
+				<Form onSubmit={this.saveData}>
+				  <Form.Group>
+					<Form.Label>Movie Name</Form.Label>
+					<Form.Control
+					  type="text"
+					  name="title"
+					  onChange={this.changeText}
+					  defaultValue={movie.title}
+					/>
+				  </Form.Group>
+				  <Form.Group>
+					<Form.Label>Category</Form.Label>
+					<Form.Control
+					  type="text"
+					  name="category"
+					  onChange={this.changeText}
+					  defaultValue={movie.category}
+					/>
+				  </Form.Group>
+				  <Row>
+					<Col>
+					  <Form.Label>Release date</Form.Label>
+					  <Form.Control
+						type="date"
+						name="releaseDate"
+						onChange={this.changeText}
+						defaultValue={movie.releaseDate}
+					  />
+					</Col>
+					<Col>
+					  <Form.Label>Duration (hour / minute)</Form.Label>
+					  <Row>
+						<Col>
+						  <Form.Control
+							type="number"
+							name="durationHours"
 							onChange={this.changeText}
-							defaultValue={movie.title}
+							placeholder="2"
+							defaultValue={movie.durationHours}
+						  />
+						</Col>
+						<Col>
+						  <Form.Control
+							type="number"
+							name="durationMinutes"
+							onChange={this.changeText}
+							placeholder="13"
+							defaultValue={movie.durationMinutes}
+						  />
+						</Col>
+					  </Row>
+					</Col>
+				  </Row>
+				  <Row>
+					<Col>
+					  <Form.Group>
+						<Form.Label>Director</Form.Label>
+						<Form.Control
+						  type="text"
+						  name="director"
+						  onChange={this.changeText}
+						  defaultValue={movie.director}
 						/>
-						<Button type="submit" variant="warning">
-							Save
-						</Button>
-					</Form>
-				)}
+					  </Form.Group>
+					</Col>
+					<Col>
+					  <Form.Group>
+						<Form.Label>Casts</Form.Label>
+						<Form.Control
+						  type="text"
+						  name="casts"
+						  onChange={this.changeText}
+						  defaultValue={movie.casts}
+						/>
+					  </Form.Group>
+					</Col>
+				  </Row>
+				  <Form.Group>
+					<Form.Label>Synopsis</Form.Label>
+					<Form.Control
+					  type="text"
+					  name="synopsis"
+					  as="textarea"
+					  onChange={this.changeText}
+					  defaultValue={movie.synopsis}
+					/>
+				  </Form.Group>
+				  <Button type="submit" variant="warning">
+					Save
+				  </Button>
+				</Form>
+			  )}
 			</React.Fragment>
-		);
+		  );		  
 	}
 }
 
