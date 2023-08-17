@@ -1,0 +1,12 @@
+.searchbar{
+
+ margin-left: 40%;
+ margin-top:  60px;
+ width: 200px;
+ height: 5px;
+ bottom: 10px;
+}
+.search-div .search-img{
+    width:10px;
+    height: 10px;
+}

@@ -106,3 +106,19 @@ exports.getGenreCountByCondition = (cond) => {
 		);
 	});
 };
+
+exports.getAllGenres = () => {
+	return new Promise((resolve, reject) => {
+		const query = dbConn.query(
+			`
+			SELECT c.id, c.name
+			FROM ${table} c 
+  		`,
+			(err, res, field) => {
+				if (err) reject(err);
+				resolve(res);
+			},
+		);
+		console.log(query.sql);
+	});
+};

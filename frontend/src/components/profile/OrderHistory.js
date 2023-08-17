@@ -2,19 +2,35 @@ import React, { Component } from "react";
 import { Button, Card, Image } from "react-bootstrap";
 import cineone from "../../assets/images/cineone.png";
 import ebv from "../../assets/images/ebv.png";
+import { getOrderHistory } from "../../redux/actions/order";
+import { connect } from "react-redux";
+import { userDetail, updateUser } from "../../redux/actions/user";
 
-export default class OrderHistory extends Component {
+class OrderHistory extends Component {
+
+  async componentDidMount() {
+    const {user_id} = this.props;
+    await this.props.getOrderHistory(user_id);
+  }
+  formatDateTime(isoDateString) {
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    const dateTime = new Date(isoDateString);
+    return dateTime.toLocaleDateString('en-US', options);
+  }
   render() {
-    return (
-      <div>
-        <Card className="mt-4">
+    const {transaction} = this.props;
+    console.log("TRANSACTION: ", transaction)
+    let list_transaction = [];
+    const currentDate = new Date()
+    list_transaction = transaction.map((tran, index) => (
+      <Card className="mt-4">
           <Card.Body>
             <div className="d-flex justify-content-between align-items-center">
               <div>
                 <p className="text-xs text-color-muted mb-1">
-                  Tuesday, 07 July 2020 - 04:30pm
+                {this.formatDateTime(tran.dateTime)} - {tran.time}
                 </p>
-                <p className="text-display-xs mb-0">Spider-Man: Homecoming</p>
+                <p className="text-display-xs mb-0">{transaction.movie}</p>
               </div>
               <div>
                 <Image src={cineone} height={21} />
@@ -22,38 +38,20 @@ export default class OrderHistory extends Component {
             </div>
             <hr />
             <div className="d-flex justify-content-between align-items-center">
-              <Button variant="success col-3 ticket-btn">
-                Ticket in active
-              </Button>
-              <select
-                defaultValue="Show Details"
-                className="text-md text-color-muted border-0 pr-3"
-              >
-                <option>Show Details</option>
-                <option>Hà Nội</option>
-                <option>Bắc Giang</option>
-                <option>Đông Lào</option>
-              </select>
-            </div>
-          </Card.Body>
-        </Card>
-        <Card className="mt-4">
-          <Card.Body>
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <p className="text-xs text-color-muted mb-1">
-                  Monday, 14 June 2020 - 02:00pm
+            {tran.dateTime < currentDate ? (
+    <Button variant="success col-3 ticket-btn">
+      Ticket in active
+    </Button>
+  ) : (
+    <Button variant="success col-3 ticket-btn"> 
+      Ticket is used
+    </Button>
+  )}
+
+              <p className="text-xs text-color-muted mb-1">
+                {(tran.movie)}
                 </p>
-                <p className="text-display-xs mb-0">Avengers: End Game</p>
-              </div>
-              <div>
-                <Image src={ebv} height={43} />
-              </div>
-            </div>
-            <hr />
-            <div className="d-flex justify-content-between align-items-center">
-              <Button variant="secondary col-3 ticket-btn">Ticket used</Button>
-              <select
+              {/* <select
                 defaultValue="Show Details"
                 className="text-md text-color-muted border-0 pr-3"
               >
@@ -61,39 +59,32 @@ export default class OrderHistory extends Component {
                 <option>Hà Nội</option>
                 <option>Bắc Giang</option>
                 <option>Đông Lào</option>
-              </select>
+              </select> */}
             </div>
           </Card.Body>
         </Card>
-        <Card className="mt-4">
-          <Card.Body>
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <p className="text-xs text-color-muted mb-1">
-                  Monday, 10 March 2020 - 04:00pm
-                </p>
-                <p className="text-display-xs mb-0">Thor: Ragnarok</p>
-              </div>
-              <div>
-                <Image src={ebv} height={43} />
-              </div>
-            </div>
-            <hr />
-            <div className="d-flex justify-content-between align-items-center">
-              <Button variant="secondary col-3 ticket-btn">Ticket used</Button>
-              <select
-                defaultValue="Show Details"
-                className="text-md text-color-muted border-0 pr-3"
-              >
-                <option>Show Details</option>
-                <option>Hà Nội</option>
-                <option>Bắc Giang</option>
-                <option>Đông Lào</option>
-              </select>
-            </div>
-          </Card.Body>
-        </Card>
+
+    ));
+    return (
+      <div>
+        {list_transaction}
       </div>
     );
   }
+  
 }
+
+
+const mapStateToProps = (state) => ({
+  movie: state.movie,
+  user_id: state.user.data.id,
+  transaction: state.order.transaction
+});
+
+const mapDispatchToProps = {
+  getOrderHistory,
+};
+
+export default 
+  connect(mapStateToProps, mapDispatchToProps)(OrderHistory)
+;

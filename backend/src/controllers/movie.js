@@ -170,6 +170,22 @@ exports.listMovies = async (req, res) => {
   }
 };
 
+exports.listMovieByGenres = async (req, res) => {
+  const { genres_id } = req.params; // Lấy giá trị id từ params
+
+  try {
+    const results = await movieModel.getMovieByGenresWithItems(genres_id);
+    console.log(1111);
+    if (results.length > 0) {
+      return status.ResponseStatus(res, 200, "Details of cart", results);
+    } else {
+      return status.ResponseStatus(res, 400, "Movie not exists");
+    }
+  } catch (error) {
+    return status.ResponseStatus(res, 500, "Internal Server Error");
+  }
+};
+
 exports.deleteMovie = async (req, res) => {
   const { id } = req.params;
   const initialResult = await movieModel.getMovieByIdWithItems(id);

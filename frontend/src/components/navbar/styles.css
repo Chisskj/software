@@ -42,7 +42,7 @@
 	height: 42.5px;
 	position: absolute;
 	top: 10px;
-	right: 190px;
+	right: 100px;
 	border-radius: 50%;
 	color: #5f2eea;
 	text-align: center;
@@ -54,11 +54,11 @@
 	top: 0;
 	left: 90px;
 } */
-.m-0{
+/* .m-0{
 	position: absolute;
 	top: 0;
 	left: 50px;
-}
+} */
 form:hover {
 	width: 200px;
 	cursor: pointer;

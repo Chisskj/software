@@ -107,3 +107,14 @@ exports.detailGenre = async (req, res) => {
 		return status.ResponseStatus(res, 400, "Genre not exists");
 	}
 };
+exports.listAllGenres = async (req, res) => {
+	const results = await genreModel.getAllGenres();
+	if (results) {
+		return status.ResponseStatus(
+			res,
+			200,
+			"List of all Seats",
+			results,
+		);
+	}
+};

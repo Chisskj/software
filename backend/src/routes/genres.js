@@ -37,5 +37,8 @@ routes
 		authMiddleware.authRole(Role.Admin),
 		genreController.createGenre,
 	);
+routes
+.route("/all-genres")
+.get(genreController.listAllGenres);
 
 module.exports = routes;

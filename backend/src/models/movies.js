@@ -36,6 +36,25 @@ exports.getMovieByIdWithItems = (id) => {
 		console.log(query.sql);
 	});
 };
+exports.getMovieByGenresWithItems = (id) => {
+	return new Promise((resolve, reject) => {
+		const query = dbConn.query(
+			`
+			SELECT m.id, m.title, m.picture, m.releaseDate, m.directed, m.duration, 
+			m.cast, m.synopsis, g.name as genreName
+			FROM ${table} m 
+			LEFT JOIN movie_genres mg ON m.id = mg.idMovie 
+			LEFT JOIN genres g ON g.id = mg.idGenre
+			WHERE g.id = ${id}
+  		`,
+			(err, res, field) => {
+				if (err) reject(err);
+				resolve(res);
+			},
+		);
+		console.log(query.sql);
+	});
+};
 exports.getMovieByTittleWithItems = (title) => {
 	return new Promise((resolve, reject) => {
 	  const query = dbConn.query(

@@ -1,3 +1,5 @@
+import http from "../../helpers/http";
+
 export const createOrder = (
 	dataLocation,
 	dataDate,
@@ -48,5 +50,19 @@ export const createSeat = (data = []) => {
 				payload: message,
 			});
 		}
+	};
+};
+
+export const getOrderHistory = (id) => {
+	return async (dispatch) => {
+		const response = await http().get(`orders/${id}`);
+		// console.log("responseresponseresponse: ", response.data.results)
+		dispatch({
+			type: "GET_ALL_TRANSACTION",
+			payload: response.data.results,
+		});
+		dispatch({
+			type: "TOGGLE_TRANSACTION_LOADING",
+		});
 	};
 };

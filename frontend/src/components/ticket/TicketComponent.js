@@ -41,6 +41,7 @@ class TicketComponent extends Component {
   render() {
     const { dataDate, dataShowtime, dataMovie } = this.props.order.listOrder;
     const { seatOrder } = this.props.order;
+    console.log("THIS PROP: ", this.props);
     return (
       <div>
         <Container className="py-5">

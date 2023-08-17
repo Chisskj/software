@@ -5,6 +5,7 @@ import FooterComponent from "../../components/footer/FooterComponent";
 import NavbarComponent from "../../components/navbar/NavbarComponent";
 import ShowingComponent from "../../components/showing/ShowingComponent";
 import SubscribeComponent from "../../components/subscribe/SubscribeComponent";
+import SearchBar from "../../components/searchbar/SearchBar";
 import "./styles.css";
 import { login, autoLogin } from "../../redux/actions/auth";
 import { connect } from "react-redux";
@@ -13,7 +14,8 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <NavbarComponent />
+        <NavbarComponent/>
+        
         <Container>
           <section>
             <Row>
@@ -59,6 +61,8 @@ class HomePage extends Component {
               </Col>
             </Row>
           </section>
+
+
           <section>
             <ShowingComponent />
           </section>

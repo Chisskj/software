@@ -17,6 +17,7 @@ import { userDetail } from "../../redux/actions/user";
 import { logout } from "../../redux/actions/auth";
 import { getCart } from "../../redux/actions/cart";
 import { getMovieDetailByTitle } from "../../redux/actions/movie";
+import SearchBar from "../../components/searchbar/SearchBar";
 
 class NavbarComponent extends Component {
   constructor(props) {
@@ -73,10 +74,11 @@ class NavbarComponent extends Component {
               </Nav.Item>
               <Nav.Item>
                 {/* <Form action="" className="search-form"> */}
-                <input type="search" className="" ref={this.inputRef}/>
+                {/* <input type="search" className="" ref={this.inputRef}/>
                   <button class="fa fa-search" onClick={this.handle}>
                     <Link to={`/movie-detail/${this.props.details.id}`}></Link>
-                  </button>
+                  </button> */}
+                <SearchBar/>
                 {/* </Form> */}
               </Nav.Item>
 

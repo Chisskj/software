@@ -24,3 +24,34 @@ export const genre = (name) => {
 		}
 	};
 };
+
+
+
+export const all_genres = () => {
+	return async (dispatch) => {
+		const response = await http().get(`/all-genres`);
+		console.log("responseresponseresponse: ", response.data.results)
+		dispatch({
+			type: "GET_ALL_GENRES",
+			payload: response.data.results,
+		});
+		dispatch({
+			type: "TOGGLE_CART_LOADING",
+		});
+	};
+};
+
+
+export const getGenresById = (id) => {
+	return async (dispatch) => {
+		const response = await http().get(`genres/${id}`);
+		// console.log("responseresponseresponse: ", response.data.results)
+		dispatch({
+			type: "GET_GENRES_BY_ID",
+			payload: response.data.results,
+		});
+		dispatch({
+			type: "TOGGLE_CART_LOADING",
+		});
+	};
+};

@@ -63,6 +63,7 @@ class MovieDetailComponent extends Component {
   render() {
     const { movie } = this.props;
     const { user_id } = this.props;
+    console.log("PROPS:", this.props)
     console.log("user_id: ", user_id.data.id)
     console.log("movie.details: ", movie.details)
     const { timeData } = this.props.showtime;
@@ -276,6 +277,7 @@ const mapStateToProps = (state) => ({
   order: state.order,
   user_id: state.user,
 });
+
 const mapDispatchToProps = {
   getMovieDetail,
   showTime,

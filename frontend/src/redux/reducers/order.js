@@ -2,6 +2,7 @@ const initialState = {
   listOrder: [],
   errorMsg: "",
   seatOrder: [],
+  transaction: [],
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -22,6 +23,12 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         seatOrder: action.payload,
+      };
+    }
+    case "GET_ALL_TRANSACTION": {
+      return {
+        ...state,
+        transaction: action.payload,
       };
     }
     default: {

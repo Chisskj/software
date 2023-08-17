@@ -3,8 +3,14 @@ import { Card, Col, Image } from "react-bootstrap";
 import { connect } from "react-redux";
 import "./styles.css";
 import { userDetail } from "../../redux/actions/user";
+import { getOrderHistory } from "../../redux/actions/order";
+
 
 class InfoProfile extends Component {
+  async componentDidMount() {
+    const {user_id} = this.props;
+    await this.props.getOrderHistory(12);
+  }
   async componentDidMount() {
     this.props.userDetail(this.props.auth.token);
   }

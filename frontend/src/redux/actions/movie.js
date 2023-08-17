@@ -50,6 +50,7 @@ export const getMovieDetail = (id) => {
 		});
 	};
 };
+
 export const getMovieDetailByTitle = (title) => {
 	console.log("GETMOVIEBYTITLE", title)
 	return async (dispatch) => {
@@ -63,3 +64,18 @@ export const getMovieDetailByTitle = (title) => {
 		});
 	};
 };
+
+export const getMovieByGenres = (id) => {
+	return async (dispatch) => {
+		const response = await http().get(`list_genres/${id}`);
+		// console.log("responseresponseresponse: ", response.data.results)
+		dispatch({
+			type: "GET_MOVIE_BY_GENRES",
+			payload: response.data.results,
+		});
+		dispatch({
+			type: "TOGGLE_CART_LOADING",
+		});
+	};
+};
+

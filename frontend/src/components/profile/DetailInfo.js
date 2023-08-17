@@ -39,15 +39,15 @@ class DetailInfo extends Component {
       password: values.password,
     }, values.id);
     if (this.props.user.errorMsg === "") {
-      console.log("sukses");
+      console.log("1111");
     } else {
-      console.log("gagal");
+      console.log("0000");
     }
   };
 
   render() {
     const { data } = this.props.user;
-    console.log(data.id)
+    console.log(data)
 
     return (
       <div className="pt-4">
@@ -63,6 +63,7 @@ class DetailInfo extends Component {
           validationSchema={ValidatorSchema}
           onSubmit={(values) => {
             values.id = data.id
+            values.phoneNumber = values.phoneNumber.toString()
             console.log("hihihihi");
             this.update(values);
             window.location.reload();
@@ -185,20 +186,6 @@ class DetailInfo extends Component {
                     </Form.Group>
                   </Card.Body>
                 </Card>
-                <Alert
-                  className="mt-4"
-                  variant="danger"
-                  onClose={() => this.setState({ show: this.state.show })}
-                  dismissible
-                >
-                  <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-                  <p>
-                    Change this and that and try again. Duis mollis, est non
-                    commodo luctus, nisi erat porttitor ligula, eget lacinia
-                    odio sem nec elit. Cras mattis consectetur purus sit amet
-                    fermentum.
-                  </p>
-                </Alert>
                 {/* <ButtonLeft
                   buttonText="Update Change"
                   type="submit"

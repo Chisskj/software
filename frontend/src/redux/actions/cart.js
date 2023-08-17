@@ -59,7 +59,7 @@ export const delete_cart = (user_id, id) => {
 export const getCart = (id) => {
 	return async (dispatch) => {
 		const response = await http().get(`addcart-page/${id}`);
-		console.log("responseresponseresponse: ", response.data.results)
+		// console.log("responseresponseresponse: ", response.data.results)
 		dispatch({
 			type: "GET_CART_DETAIL",
 			payload: response.data.results,

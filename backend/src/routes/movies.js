@@ -33,16 +33,15 @@ routes
     uploadImage,
     movieController.updateMovie
   )
-  // .patch(
-  // 	authMiddleware.authCheck,
-  // 	authMiddleware.authRole(Role.Admin),
-  // 	movieController.updateGenreMovie,
-  // )
   .put(
     authMiddleware.authCheck,
     authMiddleware.authRole(Role.Admin),
     uploadImage,
     movieController.updateMovie
   );
+
+routes
+.route("/list_genres/:genres_id")
+.get(movieController.listMovieByGenres)
 
 module.exports = routes;
